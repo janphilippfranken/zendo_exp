@@ -1,0 +1,35 @@
+{
+  "name": "mutli-participants-zendo-task",
+  "version": "1.0.0",
+  "description": "This is an experiment where 2 participants are taking part at the same time. It uses nodejs, socketio, express and more",
+  "main": "index.js",
+  "engines": {
+    "node": "12.15.0",
+    "npm": "6.13.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Nikos Theodoropoulos",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "cookie-parser": "^1.4.5",
+    "dependable": "^1.1.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-promise-router": "^3.0.3",
+    "express-session": "^1.17.0",
+    "forever": "^2.0.0",
+    "helmet": "^3.21.3",
+    "lodash": "^4.17.15",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.5",
+    "socket.io": "^2.3.0"
+  }
+}

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Science Game</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/uploads/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/group.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Libraries -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="http://lib.ivank.net/ivank.js"></script>
+    <script src="/js/lib/underscore-min.js" type="text/javascript"></script>
+    <script src="/js/lib/notify.min.js" type="text/javascript"></script>
+
+    <!-- Initial Scripts -->
+    <script src="/js/group/rules.js"></script>
+</head>
+<!-- onload="document.getElementById('game_frame').contentWindow.startIframeORgetIframe();" -->
+<body style="background:lavenderblush">
+
+<!-- GROUP NAME -->
+<input type="hidden" name="" id="groupName" value="<%= groupName %>">
+<!-- PARTICIPANT NAME -->
+<input type="hidden" name="" id="username" value="<%= username %>">
+<!-- ########################## IMAGES FOR NEIGHBOURS ######################### -->
+<div id="images-div" style="display:none">
+  <!-- NEIGHBOUR 1 (what the guy who enters first see) -->
+  <div class="neighb-images" id = "images-user1" style="display:none">
+    <!-- You side -->
+    <div class="imagesDivisions" id = "you-imagesDivisions-1">
+      <!-- Title -->
+      <div class="image-title">
+        These are your choices<br>
+      </div>
+
+      <div class="image-division" >
+        <!-- image -->
+        <iframe src="/zendo_iframe1.html" width=800 height=500 id="you-image-user1" name="game_frame_you-image-user1" tabindex="0"></iframe>
+      </div>
+    </div>
+
+    <!-- Other side -->
+    <div class="imagesDivisions" id = "other-imagesDivisions-1">
+      <!-- Title -->
+      <div class="image-title">
+        These are <strong id = "user1-other-name"></strong>'s choices <br>
+      </div>
+
+      <!-- image -->
+      <div class="image-division">
+        <iframe src="/zendo_iframe1.html" width=800 height=500 id="other-image-user1" name="game_frame_other-image-user1" tabindex="0"></iframe>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- NEIGHBOUR 2 (what the guy who enters second see) -->
+  <div class="neighb-image" id = "images-user2" style="display:none">
+    <!-- You side -->
+      <div class="imagesDivisions" id = "you-imagesDivisions-2">
+        <!-- Title -->
+        <div class="image-title">
+          These are your choices<br>
+        </div>
+
+        <div class="image-division" >
+          <!-- image -->
+          <iframe src="/zendo_iframe1.html" width=800 height=500 id="you-image-user2" name="game_frame_you-image-user2" tabindex="0"></iframe>
+        </div>
+      </div>
+
+    <!-- Other side -->
+      <div class="imagesDivisions" id = "other-imagesDivisions-2">
+        <!-- Title -->
+        <div class="image-title">
+          These are <strong id = "user2-other-name"></strong>'s choices <br>
+        </div>
+
+          <div class="image-division">
+            <!-- image -->
+            <iframe src="/zendo_iframe1.html" width=800 height=500 id="other-image-user2" name="game_frame_other-image-user2" tabindex="0"></iframe>
+          </div>
+      </div>
+
+    </div>
+  <!-- Continue to Posterior div -->
+    <div id="button-to-posterior-div">
+      <p>Press continue to revise your initial choices</p>
+      <button id = "button-to-posterior" type="button" name="continue" ><span>Continue</span></button>
+    </div>
+  </div>
+
+<!-- Waiting for particiant division -->
+<div id="waiting_area" style="background:lavenderblush">
+  <div style = "text-align:center; font-size:20px;">
+    Hey <%= username %>, thank you for joining our experiment! <br> Please enjoy this
+    cutie while waiting for another participant to join :) <br><br>
+  </div>
+  <div align=center>
+      <video  height=300 id="cat_vid" name="construction_mov" autoplay muted loop>
+          <source src = "/movies/cat_vid.mp4" type="video/mp4">
+      </video>
+  </div>
+</div>
+
+
+<!-- INSTRUCTIONS START -->
+<div class="instructions well" id="ins_1" style="display:none;">
+    <p>Thank you for agreeing to participate!</p>
+    <p>In this task you will be using your scientific investigation skills.</p>
+    <p>You and the other player have arrived on a bizarre alien planet where the only objects you can see are colored cones clumped into small groups in an otherwise empty landscape (Figure 1).</p>
+    <div align=center>
+       <img src="/images/instructions/ins1_1.png" alt="ex1" style="width:600px;">
+       <figcaption>Figure 1 - Bizarre alien planet.</figcaption>
+   </div>
+   <br>
+    <p>You have brought a scientific measuring device.  It can be tuned to detect different types of radiation.  At particular settings, it reveals that some of the clumps of cones emit colorful radiation, while others do not do not (Figure 2).</p>
+    <div align=center>
+        <img src="/images/instructions/ins1_2.png" alt="ex1" style="width:600px;">
+        <figcaption>Figure 2 - Testing for radiation.  Only the arrangement on the left emits this kind of radiation.</figcaption>
+    </div>
+    <br>
+    <p>Your job is to come up with experiments to help work out what makes a set of cones emit radiation.</p>
+    <!--console.log(psiTurk.getInstructionIndicator()) -->
+    <button class="button" id="ins_1_btn"><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_2" style="display:none;">
+<p>There are a few kinds of radiation for which we have already established the cause.</p>
+    <p>Study the list below to help you get started.  For each type of radiation we give several examples. The examples with the yellow stars <b>do</b> emit this kind of radiation, those with white stars <b>do not</b>.</p>
+        <ol>
+            <li>Alpha waves: <i>Whenever there is at least one small cone</i><br><br>
+                <img src="/images/instructions/ins2_1.png" alt="ex1" style="width:600px;">
+                <br><br>
+            <li>Beta waves: <i>If all cones are all the same color</i><br><br>
+                <img src="/images/instructions/ins2_2.png" alt="ex1" style="width:600px;">
+                <br><br>
+            <li>Delta waves: <i>If none of the cones are touching</i><br><br>
+                <img src="/images/instructions/ins2_3.png" alt="ex1" style="width:600px;">
+                <br><br>
+            <li>Gamma waves: <i>If all the cones point in the same direction</i><br><br>
+                <img src="/images/instructions/ins2_4.png" alt="ex1" style="width:600px;">
+                <br><br>
+            <li>Epsilon waves: <i>If there is a a blue cone that is larger than any red cones</i><br><br>
+                <img src="/images/instructions/ins2_5.png" alt="ex1" style="width:600px;">
+                <br><br>
+        </ol>
+    <p>So, as you can see, the radiation works quite differently here than on Earth.  It might be caused by many different things such as the cones' number, sizes, colors, positions, orientations, as well as more complicated relationships between them.</p>
+    <button class="button" id="ins_2_btn"><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_3" style="display:none;">
+
+<p>We have discovered that other arrangements of cones emit <b>5</b> other types of radiation.</p>
+<p>However, we don't yet know what conditions (arrangements of cones) cause these types of radiation to be emitted...</p>
+
+<p>Your job is to perform some additional experiments investigating each type of radiation.</p>
+
+ <p>For each kind of radiation, your task has six stages:</p>
+    <ol>
+        <li>See <b>1</b> arrangement already known to emit radiation at this frequency.
+        <li>Design <b>7</b> of your own arrangements, and test each one to see if it emits this kind of radiation.
+        <li>See <b>8</b> other arrangements and guess which of these will emit this kind of radiation.
+        <li>Describe the rule that captures what arrangements will emit this radiation in your own words.
+        <li>See the <b>8</b> arragnements again including your initial choices and the choices of the other <b>player</b>.
+        <li><b>Revise</b> your initial choices under consideration of the choices of the other player.
+    </ol>
+    <button class="button" id="ins_3_btn"><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_4" style="display:none;">
+
+
+    <p>To design your own experiments you will add pieces to the world using a construction interface.  Watch the video below to see how this works.  Note you must watch the video before you can continue to the  next page.</p>
+    <div align=center>
+        <video controls width="400px"height="300px" id="construction_mov" name="construction_mov" controls="controls"  onended="$('#ins_4_btn').prop('disabled', false);" muted preload="auto">
+            <source src = "/movies/construction_psi.mp4" type="video/mp4">
+            <source src="/movies/construction_psi.mov"  type="video/mov">
+              <!-- <source src="/movies/construction_psi.webm"  type="video/webm"> -->
+            <p>Sorry.  If this video wont play you wont be able to complete the experiment.</p>
+        </video>
+    </div>
+    <!-- <video controls="controls" width="600" name="Shaking" src="./static/movies/construction_phi.mp4"></video> -->
+
+    <p>In the interface you can:</p>
+    <ol>
+        <li>Press buttons at the bottom to add cones
+        <li>Move the cones around by picking them up with the mouse (left clicking and holding)
+        <li>Turn them using the "Z" (counterclockwise) and "X" (clockwise) keys
+        <li>Right click on them to remove them (command + click if you are using mac trackpad)
+    </ol>
+
+    <p>When you are ready, click ``Test'' to measure your chosen arrangement and see if it is emitting radiation at the current frequency.  If the arrangement follows the rule you will see stars rising to the top of the screen.  Otherwise nothing will happen.  You will be able to see your previous tests and their outcomes at the top of the screen.  Yellow stars indicate tests in which radiation <i>was</i> emitted.</p>
+    <button class="button" id="ins_4_btn" disabled=""><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_5" style="display:none;">
+
+    <p>After your experiments, you will be tested on the cause of this kind of radiation.  You will be shown 8 new arrangements.  Select which you think emit radiation when tested.  <i>You must select at least one and less than all eight.</i></p>
+
+    <p>You will receive a cash bonus of <b>5 cents</b> for each of the arrangements you guess correctly about (watch video).  This means that you can make a bonus of up to $0.05 &#215 5 radiation types &#215 8 test arrangements = $2.  Play the video below to continue.</p>
+
+    <div align=center>
+        <video controls height=300 id="selection_vid" name="selection_vid" controls="controls" onended="$('#ins_5_btn').prop('disabled', false);" muted>
+            <source src="/movies/selection_mu.mp4"  type="video/mp4">
+            <source src="/movies/selection_mu.mov"  type="video/mov">
+             <p>Sorry.  If this video wont play you wont be able to complete the experiment.</p>
+        </video>
+    </div>
+    <button class="button" id="ins_5_btn" disabled=""><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_6" style="display:none;">
+    <p>Therafter, you will be asked to <b>describe in your own words</b> what you think is the hidden rule that causes the radiation to be emitted at this frequency.  For instance you might write, "I think all the cones have to be large".  You should be as specific as possible with this.  Try to use unambiguous phrases like "There must be at least..." / "There are at most.." / "There is exactly one..."</p>
+
+    <div align=center>
+        <img src="/images/instructions/free_response.png" alt="ex1" style="width:400px;">
+    </div>
+
+    <p><b>Note:</b> The true rule has <i>nothing to do with:</i> the radiation's name; <i>nor</i> the way radiation might work on Earth; <i>nor</i> the order in which you perform your tests <i>nor</i> with what was true for the other frequencies of radiation.  I.e., on this planet, all types of radiation operate independently.</p><br><br>
+
+    <button class="button" id="ins_6_btn"><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_7" style="display:none;">
+    <p>Finally, you will be asked to <b>revise</b> your initial choices based on the choices of the other player. The other player will have performed <b>different experiments</b>, meaning that their knowledge about radiation may help <b>improve</b> the accuracy of your choices (and so increase your bonus).</p>
+
+    <div align=center>
+        <video height=450 id="collaborator_vid" name="collaborator_vid" controls="controls" onended="$('#ins_7_btn').prop('disabled', false);" muted>
+            <source src="/movies/collaborator.mov"  type="video/mov">
+            <source src="/movies/collaborator.mp4"  type="video/mp4">
+        </video>
+    </div>
+
+    <p><u>This is a really tough assignment, so do the best you can.  Do not worry if you cannot work everything out.<br><br>Good luck!</u></p>
+    <button class="button" id="ins_7_btn" disabled=""><span>Continue</span></button>
+</div>
+
+<div class="instructions well" id="ins_8" style="display:none;">
+
+    <ol>
+        <li>Your task is to work out what rule determines whether an arrangement of cones will emit radiation<br><br>
+        <li>You will do this for 5 different types of radiation waves (5 different rules)<br><br>
+        <li>You will see one positive example and then create 7 more of your own each time<br><br>
+        <li>You will then get a chance to demonstrate your understanding by guessing about whether 8 new arrangements will emit this type of arrangements<br><br>
+        <li>You will describe the rule in your own words before moving on to the next type of radiation<br><br>
+        <li>You will then see the choices the other player and revise your initial choices. Make sure you consider their choices carefully, they might help improve your accuracy to increase your overall bonus
+    </ol>
+    <button class="button" id="ins_8_btn"><span>Continue</span></button>
+</div>
+
+<!-- COMPREHENSION QUIZ -->
+<div class="instructions well" id="comprehension_quiz" style="display:none;">
+    <p> We will now ask some quick questions to make sure you understand the task!
+
+    <p><b>1.</b> You will be investigating 10 different types of radiation
+        <select id="comprehension_q1" name="comprehension_q1" class="comprehensionQ">
+           <option value="noresp" SELECTED></option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+    </p>
+    <br/>
+
+    <p><b>2.</b> For each type, your job is to create arrangements that emit radiation as many times as possible
+        <select id="comprehension_q2" name="comprehension_q2" class="comprehensionQ">
+           <option value="noresp" SELECTED></option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+    </p>
+    <br/>
+
+    <p><b>3.</b> After doing your experiments, you will make judgments about new arrangements
+        <select id="comprehension_q3" name="comprehension_q3" class="comprehensionQ">
+           <option value="noresp" SELECTED></option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+    </p>
+    <br/>
+
+    <p><b>4.</b> The rule can only be to do with the number, sizes, or colors of the cones
+        <select id="comprehension_q4" name="comprehension_q4" class="comprehensionQ">
+           <option value="noresp" SELECTED></option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+    </p>
+    <br/>
+
+    <p><b>5.</b> The rule might have to do with the order in which you performed your tests
+        <select id="comprehension_q5" name="comprehension_q5" class="comprehensionQ">
+           <option value="noresp" SELECTED></option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+    </p>
+    <br>
+
+     <p><b>6.</b> You may revise your initial choices based on the choices of the other player and earn 5 cents for each one you get right
+        <select id="comprehension_q6" name="comprehension_q6" class="comprehensionQ">
+           <option value="noresp" SELECTED></option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+    </p>
+
+    <button class="button" id="comprehension_btn"><span>Check</span></button>
+    <button class="button" id="start_btn" style="display:none;"><span>Start</span></button>
+  </div>
+  <!-- INSTRUCTIONS FINISH -->
+
+
+
+
+
+
+<!-- ########################## Waiting area for the one who finishes first ######################### -->
+<div id="waiting-area-after-trial" style="display:none; text-align:center; font-size:20px; margin-top: 20px">
+  Please wait until <strong id = "user-finished2"></strong> finishes too.
+</div>
+
+
+
+
+  <!-- GAME FRAME -->
+  <div id="game" style="visibility:hidden">
+    <iframe src="/zendo_iframe.html" width=800 height=500 id="game_frame" name="game_frame" tabindex="0"></iframe>
+    <div id="query2">
+    </div>
+    <div id="phase4-div" style="display:none">
+      <textarea id="phase4-text" placeholder="Please enter your answer here" rows="4" cols="50" ></textarea>
+      <button id="phase4btn" type="button" name="button" style="display:block">Continue</button>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div id="phase5-div" style="display:none; margin:5%">
+    <div id="phase5inst" style="font-size:20px; margin-bottom: 15px">
+      Now that you've seen what the other participant chose, <br>please describe once more what makes a scene emit radiation (optional)
+    </div>
+    <textarea id="phase5-text" placeholder="Please enter your answer here (optional)" rows="4" cols="50" ></textarea>
+    <button id="phase5btn" type="button" name="button" style="display:block">Continue</button>
+  </div>
+
+
+
+  <!-- Debriefing -->
+  <div id="debrief" class="frame" style="display:none;">
+    <div id="user-left" style="display:none; font-sieze:40px; text-align:center;margin:5% 0">
+      Unfortunately, the other user left the game. <br>
+      You will compensate for your time after you complete this form.<br>
+      <br>
+
+    </div>
+  	<h1>Demographics and Debrief</h1>
+  	<p>You are finished!  Thank you for your contributions to science. You will be eligible for full payment once you answer the following questions.</p>
+  	<p> <span style="font-weight:bold">Note</span>:  To continue, please answer <span style="color:red">all questions</span>.</p>
+  	<div class="instructions well">
+  	    <form id="postquiz" action="debrief" method="post">
+  			<p>Do you have any comments regarding the experiment?</p>
+  		    <textarea name="feedback" id="feedback" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
+  			<br>
+  			<p>How did you decide between candidates when providing your <b>initial recommendation</b>? Did you have a specific strategy?</p>
+  		    <textarea name="init_strat" id="init_strat" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
+  			<br>
+  			<p>How did you decide between candidates when providing your <b>final recommendation</b>? Did you have a specific strategy?</p>
+  		    <textarea name="final_strat" id="final_strat" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
+  			<br>
+  	        <p><b>1.</b> How old are you?:
+  	          <input id="ageinput" class="posttestQ" type="number" maxlength = "3" name="age" id="age" min="18" max="100" step = "1"> years
+  	        </p>
+  	        <p><b>2.</b> What is your gender?
+  	        <select id="sex" name="sex" class="posttestQ">
+  	           <option value="noresp" SELECTED></option>
+  	           <option value="female">Female</option>
+  	           <option value="male">Male</option>
+  	           <option value="other">Other</option>
+  	           <option value="noresponse">I’d prefer not to respond</option>
+  	         </select>
+  	        </p>
+  	        <br/>
+  	        <!-- beginning of a question -->
+  	        <div class="row question">
+  	            <div class="col-md-8">
+  	                <b>3.</b>On a scale of 1-10 (where 10 is the most engaged), please rate how <b>ENGAGING</b> you found the learning task:
+  	            </div>
+  	            <div class="col-md-4">
+  	                <select id="engagement" name="engagement" class="posttestQ">
+  	                    <option value="--" SELECTED>
+  	                    <option value="10">10 - Very engaging</option>
+  	                    <option value="9">9</option>
+  	                    <option value="8">8</option>
+  	                    <option value="7">7</option>
+  	                    <option value="6">6</option>
+  	                    <option value="5">5 - Moderately</option>
+  	                    <option value="4">4</option>
+  	                    <option value="3">3</option>
+  	                    <option value="2">2</option>
+  	                    <option value="1">1</option>
+  	                    <option value="0">0 - Not engaged</option>
+  	                </select>
+  	            </div>
+  	        </div>
+  	        <!-- end of a question -->
+  	        <!-- beginning of a question -->
+  	        <div class="row question">
+  	            <div class="col-md-8">
+  	                <b>4.</b>On a scale of 1-10 (where 10 is the most difficult), please rate how <b>DIFFICULT</b> you found the learning task:
+  	            </div>
+  	            <div class="col-md-4">
+  	                <select id="difficulty" name="difficulty" class="posttestQ">
+  	                    <option value="--" SELECTED>
+  	                    <option value="10">10 - Very difficult</option>
+  	                    <option value="9">9</option>
+  	                    <option value="8">8</option>
+  	                    <option value="7">7</option>
+  	                    <option value="6">6</option>
+  	                    <option value="5">5 - Moderately difficult</option>
+  	                    <option value="4">4</option>
+  	                    <option value="3">3</option>
+  	                    <option value="2">2</option>
+  	                    <option value="1">1</option>
+  	                    <option value="0">0 - Not difficult at all</option>
+  	                </select>
+  	            </div>
+  	        </div>
+  	        <!-- end of a question -->
+  	        <!-- beginning of a question -->
+  	        <div class="row question">
+  	            <div class="col-md-8">
+  	                <b>4.</b>On a scale of 1-7 (where 1 is very liberal and 7 is very conservative), please rate your <b>POLITICAL ORIENTATION</b>:
+  	            </div>
+  	            <div class="col-md-4">
+  	                <select id="pol_orientation" name="pol_orientation" class="posttestQ">
+  	                    <option value="--" SELECTED>
+  	                    <option value="7">7 - Very conservative</option>
+  	                    <option value="6">6 - Conservative</option>
+  	                    <option value="5">5 - Moderately conservative</option>
+  	                    <option value="4">4 - Neutral</option>
+  	                    <option value="3">3 - Moderately liberal</option>
+  	                    <option value="2">2 - Liberal</option>
+  	                    <option value="1">1 - Very liberal</option>
+  	                </select>
+  	            </div>
+  	        </div>
+  	        <!-- end of a question -->
+  	    </form>
+  	    <br>
+  	    <button class="button" id="done_debrief" disabled>Done</button>
+  	</div>
+  </div>
+
+<!-- THANK YOU PAGE -->
+<div id="thank-you" style="display:none;">
+  <h1>Well done, you have completed the task!</h1>
+  <p>Your completion code is: <strong id = "compl_code"></strong>. Please copy this number to mTurk</p>
+  <!-- <button id = "btn-thank-you" type="button" name="button-thank-you">Exit</button> -->
+</div>
+
+<!-- Scripts -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/group/groupchat.js"></script>
+<!-- <script src="/js/group/task.js"></script> -->
+
+<script type="text/javascript" src="/js/group/start_game.js"></script>
+
+
+
+
+</body>

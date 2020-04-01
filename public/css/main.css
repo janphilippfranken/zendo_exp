@@ -1,0 +1,51 @@
+/*body {
+    margin: 60px auto;
+    width: 70%;
+}
+*/
+h1 {
+    font-size: 2.5em;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    /*text-align: center;*/
+}
+h2 {
+    font-size: 2em;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+h3 {
+    font-size: 1.75em;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    text-align: center;
+}
+p {
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    font-size: 1.5em;
+    line-height: 1.5em;
+    color: #333;
+}
+li {
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    font-size: 1.5em;
+    line-height: 1.5em;
+    color: #333;
+}
+
+
+
+body {
+    padding:0px;
+    margin: 0px;
+    background-color: white;
+    color: black;
+    font-weight: 300; 
+    font-size: 13pt;
+}
+
+div.spacer { clear: both; }
+
+.btn.btn-primary[disabled] {
+    background-color: #ffff00;
+}
+
+
+/*.container {width: 800px}*/

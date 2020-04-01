@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+  <title>Science Game</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="/uploads/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/login.css">
+
+</head>
+
+<body class="light-page">
+<div id="landing">
+<div id="information">
+<h1 align="center">The University of Edinburgh, Psychology</h1>
+<div class="frame">
+  <h2>Information for participants</h2>
+  <div class="scroll_text" id="consent-info">
+    <p><b>Nature of the study.&nbsp;</b>You are about to participate in an experiment in which you will use your scientific investigation skills. You will collaborate with another player (MTurk worker) and update your initial choices based on the other person's judgments. After the experiment, we will ask you to provide some basic demographics (e.g., age). Your session should last up for around 30 minutes and your responses will be recorded. You will be given full instructions shortly and will be able to ask any questions you may have.</p>
+
+    <p><b>Compensation.&nbsp;</b>You will be paid $1 for your participation and an additional $3.50 if you and the other player successfully complete the task. The maximum additional bonus that can be granted is $2.</p>
+
+    <p><b>Risks and benefits.&nbsp;</b>There are no known risks to participation in this study. Other than the payment mentioned, there are no tangible benefits to you, however you will be contributing to our knowledge about hypothesis generation and social learning.</p>
+
+    <p><b>Confidentiality and use of data.&nbsp;</b>All the information we collect during the course of the research will be processed in accordance with Data Protection Law. In order to safeguard your privacy, we will never share personal information (like names or dates of birth) with anyone outside the research team; if you agree and want to be contacted for future studies, we will add your contact details to our secure participant database. Your data will be referred to by a unique participant number rather than by name. Please note that we will temporarily collect your worker ID to prevent repeated participation, however we will never share this information with anyone outside the research team. We will store any personal data (e.g., audio/video recordings, signed forms) using a password protected, encrypted hard drive. The anonymized data collected during this study will be used for research purposes. With your permission, identifiable data such as recordings may also be used for research or teaching purposes, and may be shared with other researchers or with the general public (e.g., we may make it available through the world wide web, or use it in TV or radio broadcasts).</p>
+
+    <p><b>What are my data protection rights?&nbsp;</b>The University of Edinburgh is a Data Controller for the information you provide. You have the right to access information held about you. Your right of access can be exercised in accordance with Data Protection Law. You also have other rights including rights of correction, erasure and objection.  For more details, including the right to lodge a complaint with the Information Commissioner’s Office, please visit www.ico.org.uk. Questions, comments and requests about your personal data can also be sent to the University Data Protection Officer at <a href="mailto:dpo@ed.ac.uk">dpo@ed.ac.uk</a>.</p>
+
+    <p><b>Voluntary participation and right to withdraw.&nbsp;</b>Your participation is voluntary, and you may withdraw from the study at any time and for any reason. If you withdraw from the study during or after data gathering, we will delete your data and there is no penalty or loss of benefits to which you are otherwise entitled.</p>
+
+    <p>If you have any questions about what you’ve just read, please feel free to ask, or contact us later. You can contact us by email at <a href="mailto:bramleylab@gmail.com">bramleylab@gmail.com</a>. This project has been approved by PPLS Ethics committee. If you have questions or comments regarding your own or your child’s rights as a participant, they can be contacted at 0131 650 4020 or <a href="mailto:ppls.ethics@ed.ac.uk">ppls.ethics@ed.ac.uk</a>.</p>
+    <p>By accepting this HIT, you consent to the following:</p>
+    <ol>
+      <li><b>I agree to participate in this study.</b></li>
+      <li>I confirm that I am at least <b>18 years</b> old or older. </li>
+      <li>I confirm that I have read and understood <b>how my data will be stored and used</b>.</li>
+      <li>I understand that I have the right to <b>terminate this session</b> at any point. </li>
+    </ol>
+  </div>
+</div>
+  <button class="button" id="consent-btn"><span>Accept Hit</span></button>
+</div>
+
+<div id="reminder" style="display: none;">
+<h1 align="center">Thank you for joining our experiment</h1>
+<div class="frame">
+  <p>Please note that:</p>
+  <ul>
+    <li>On the next page, you will register with a username of your choice to join a lobby where you will be waiting for your collaborator (another MTurk worker).</li>
+    <li>You will complete instructions at the same time as your collaborator.</li>
+    <li>You and your collaborator are going to complete a comprehension quiz before the start of the experiment (you <b>won't</b> be able to help each other during the quiz).</li>
+    <li>You will only be able to start the main task once both you and your collaborator successfully completed the comprehension quiz.</li>
+    <li>Please minimize the chances of possible distractions - switch off messengers, music, etc.</li>
+    <li>Please use full-screen mode.</li>
+    <li>You <b>can not</b> use a mobile phone or tablet.</li>
+    <li>Do <b>not refresh</b> this page during the experiment.</li>
+  </ul>
+</div>
+<a class="button" id="reminder-btn"><span>Understood</span></a>
+</div>
+</div>
+
+<div id="main" style="display: none;">
+  <div class="main">
+      <form action="/signup" method="post">
+
+
+          <% if(hasErrors) {%>
+              <div class="alert alert-danger text-center">
+                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                 <% _.forEach(messages, function(error){ %>
+                     <%= error %><br>
+                 <% }) %>
+
+              </div>
+          <% } %>
+          <div class="inset"x>
+              <p>
+                <label for="username">USERNAME</label>
+                <input type="text" name="username" class="" placeholder="min 3 characters" pattern=".{3,}"   required title="3 characters minimum">
+              </p>
+
+              <p>
+                <input type="hidden" value = " " name="password" class="" placeholder="">
+              </p>
+
+
+          </div>
+
+          <p class="p-container">
+              <input type="submit" class="login-log" style=" background: #3bb5ec; border: #3bb5ec;" value="Register">
+          </p>
+      </form>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!-- custom script for consent and introduction -->
+<script>
+
+$('#consent-info').scroll(function() {
+  if ($(this)[0].scrollHeight - $(this).scrollTop() <= $(this).outerHeight()) {
+      $('#consent-btn').prop('disabled',false);
+  }
+});
+
+$('#consent-btn').click(function () {
+$('#information').hide();
+$('#reminder').show();
+});
+
+$('#reminder-btn').click(function () {
+$('#reminder').hide();
+$('#main').show();
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+
+
+
+  <!-- INSTRUCTIONS -->
+<div id='ins_container'>
+  <div class="instructions well" id="ins_1" style="display:block;">
+      <p>Thank you for agreeing to participate!</p>
+      <p>In this task you will be using your scientific investigation skills.</p>
+      <p>You have arrived on a bizarre alien planet where the only objects you can see are colored cones clumped into small groups in an otherwise empty landscape (Figure 1).</p>
+      <div align=center>
+         <img src="/images/instructions/ins1_1.png" alt="ex1" style="width:600px;">
+         <figcaption>Figure 1 - Bizarre alien planet.</figcaption>
+     </div>
+     <br>
+      <p>You have brought a scientific measuring device.  It can be tuned to detect different types of radiation.  At particular settings, it reveals that some of the clumps of cones emit colorful radiation, while others do not do not (Figure 2).</p>
+      <div align=center>
+          <img src="/images/instructions/ins1_2.png" alt="ex1" style="width:600px;">
+          <figcaption>Figure 2 - Testing for radiation.  Only the arrangement on the left emits this kind of radiation.</figcaption>
+      </div>
+      <br>
+      <p>Your job is to come up with experiments to help work out what makes a set of cones emit radiation.</p>
+      <!--console.log(psiTurk.getInstructionIndicator()) -->
+      <button class="button" id="ins_1_btn"><span>Continue</span></button>
+  </div>
+
+  <div class="instructions well" id="ins_2" style="display:none;">
+  <p>There are a few kinds of radiation for which we have already established the cause.</p>
+      <p>Study the list below to help you get started.  For each type of radiation we give several examples.  The examples with the yellow stars <b>do</b> emit this kind of radiation, those with white stars <b>do not</b>.</p>
+          <ol>
+              <li>Alpha waves: <i>Whenever there is at least one small cone</i><br><br>
+                  <img src="/images/instructions/ins2_1.png" alt="ex1" style="width:600px;">
+                  <br><br>
+              <li>Beta waves: <i>If all cones are all the same color</i><br><br>
+                  <img src="/images/instructions/ins2_2.png" alt="ex1" style="width:600px;">
+                  <br><br>
+              <li>Delta waves: <i>If none of the cones are touching</i><br><br>
+                  <img src="/images/instructions/ins2_3.png" alt="ex1" style="width:600px;">
+                  <br><br>
+              <li>Gamma waves: <i>If all the cones point in the same direction</i><br><br>
+                  <img src="/images/instructions/ins2_4.png" alt="ex1" style="width:600px;">
+                  <br><br>
+              <li>Epsilon waves: <i>If there is a a blue cone that is larger than any red cones</i><br><br>
+                  <img src="/images/instructions/ins2_5.png" alt="ex1" style="width:600px;">
+                  <br><br>
+          </ol>
+      <p>So, as you can see, the radiation works quite differently here than on Earth.  It might be caused by many different things such as the cones' number, sizes, colors, positions, orientations, as well as more complicated relationships between them.</p>
+      <button class="button" id="ins_2_btn"><span>Continue</span></button>
+  </div>
+
+  <div class="instructions well" id="ins_3" style="display:none;">
+
+  <p>We have discovered that other arrangements of cones emit <b>10</b> other types of radiation.</p>
+  <p>However, we don't yet know what conditions (arrangements of cones) cause these types of radiation to be emitted...</p>
+
+  <p>Your job is to perform some additional experiments investigating each type of radiation.</p>
+
+   <p>For each kind of radiation, your task has four stages:</p>
+      <ol>
+          <li>See <b>1</b> arrangement already known to emit radiation at this frequency.
+          <li>Design <b>7</b> of your own arrangements, and test each one to see if it emits this kind of radiation.
+          <li>See <b>8</b> other arrangements and guess which of these will emit this kind of radiation.
+          <li>Describe the rule that captures what arrangements will emit this radiation in your own words.
+      </ol>
+      <button class="button" id="ins_3_btn"><span>Continue</span></button>
+  </div>
+
+  <div class="instructions well" id="ins_4" style="display:none;">
+
+
+      <p>To design your own experiments you will add pieces to the world using a construction interface.  Watch the video below to see how this works.  Note you must watch the video before you can continue to the  next page.</p>
+      <div align=center>
+          <video controls height=300 id="construction_mov" name="construction_mov" controls="controls"  onended="$('#next').prop('disabled', false);" muted preload="auto">
+              <source src = "/movies/construction_psi.mp4" type="video/mp4">
+              <source src="/movies/construction_psi.mov"  type="video/mov">
+              <!-- <source src="./static/movies/construction_psi.webm"  type="video/webm"> -->
+              <p>Sorry.  If this video wont play you wont be able to complete the experiment.</p>
+          </video>
+      </div>
+      <!-- <video controls="controls" width="600" name="Shaking" src="./static/movies/construction_phi.mp4"></video> -->
+
+      <p>In the interface you can:</p>
+      <ol>
+          <li>Press buttons at the bottom to add cones
+          <li>Move the cones around by picking them up with the mouse (left clicking and holding)
+          <li>Turn them using the "Z" (counterclockwise) and "X" (clockwise) keys
+          <li>Right click on them to remove them (command + click if you are using mac trackpad)
+      </ol>
+
+      <p>When you are ready, click ``Test'' to measure your chosen arrangement and see if it is emitting radiation at the current frequency.  If the arrangement follows the rule you will see stars rising to the top of the screen.  Otherwise nothing will happen.  You will be able to see your previous tests and their outcomes at the top of the screen.  Yellow stars indicate tests in which radiation <i>was</i> emitted.</p>
+      <button class="button" id="ins_4_btn"><span>Continue</span></button>
+  </div>
+
+  <div class="instructions well" id="ins_5" style="display:none;">
+
+      <p>After your experiments, you will be tested on the cause of this kind of radiation.  You will be shown 8 new arrangements.  Select which you think emit radiation when tested.  <i>You must select at least one and less than all eight.</i></p>
+
+      <p>You will receive a cash bonus of <b>5 cents</b> for each of the arrangements you guess correctly about (watch video).  This means that you can make a bonus of up to $0.05 &#215 10 radiation types &#215 8 test arrangements = $4.  Play the video below to continue.</p>
+
+      <div align=center>
+          <video controls height=300 id="selection_vid" name="selection_vid" controls="controls" onended="$('#next').prop('disabled', false);" muted>
+              <source src="/movies/selection_mu.mp4"  type="video/mp4">
+              <source src="/movies/selection_mu.mov"  type="video/mov">
+               <p>Sorry.  If this video wont play you wont be able to complete the experiment.</p>
+          </video>
+      </div>
+      <button class="button" id="ins_5_btn"><span>Continue</span></button>
+  </div>
+
+  <div class="instructions well" id="ins_6" style="display:none;">
+      <p>Finally, you will be asked to <b>describe in your own words</b> what you think is the hidden rule that causes the radiation to be emitted at this frequency.  For instance you might write, "I think all the cones have to be large".  You should be as specific as possible with this.  Try to use unambiguous phrases like "There must be at least..." / "There are at most.." / "There is exactly one..."</p>
+
+      <div align=center>
+          <img src="/images/instructions/free_response.png" alt="ex1" style="width:400px;">
+      </div>
+
+      <p><b>Note:</b> The true rule has <i>nothing to do with:</i> the radiation's name; <i>nor</i> the way radiation might work on Earth; <i>nor</i> the order in which you perform your tests <i>nor</i> with what was true for the other frequencies of radiation.  I.e., on this planet, all types of radiation operate independently.</p><br><br>
+
+      <p><u>This is a really tough assignment, so do the best you can.  Do not worry if you cannot work everything out.<br><br>Good luck!</u></p>
+      <button class="button" id="ins_6_btn"><span>Continue</span></button>
+  </div>
+
+  <div class="instructions well" id="ins_7" style="display:none;">
+
+      <ol>
+          <li>Your task is to work out what rule determines whether an arrangement of cones will emit radiation<br><br>
+          <li>You will do this for 10 different types of radiation waves (10 different rules)<br><br>
+          <li>You will see one positive example and then create 7 more of your own each time<br><br>
+          <li>You will then get a chance to demonstrate your understanding by guessing about whether 8 new arrangements will emit this type of arrangements (making 5 cents for each one you get right)<br><br>
+          <li> Finally you will describe the rule in your own words before moving on to the next type of radiation
+      </ol>
+      <button class="button" id="ins_7_btn"><span>Continue</span></button>
+  </div>
+
+  <!-- COMPREHENSION QUIZ -->
+  <div class="instructions well" id="comprehension_quiz" style="display:none;">
+      <p> We will now ask some quick questions to make sure you understand the task!
+
+      <p><b>1.</b> You will be investigating 10 different types of radiation
+          <select id="comprehension_q1" name="comprehension_q1" class="comprehensionQ">
+             <option value="noresp" SELECTED></option>
+             <option value="true">True</option>
+             <option value="false">False</option>
+           </select>
+      </p>
+      <br/>
+
+      <p><b>2.</b> For each type, your job is to create arrangements that emit radiation as many times as possible
+          <select id="comprehension_q2" name="comprehension_q2" class="comprehensionQ">
+             <option value="noresp" SELECTED></option>
+             <option value="true">True</option>
+             <option value="false">False</option>
+           </select>
+      </p>
+      <br/>
+
+      <p><b>3.</b> After doing your experiments, you will make judgments about new arrangements and earn 5 cents for one you get right
+          <select id="comprehension_q3" name="comprehension_q3" class="comprehensionQ">
+             <option value="noresp" SELECTED></option>
+             <option value="true">True</option>
+             <option value="false">False</option>
+           </select>
+      </p>
+      <br/>
+
+      <p><b>4.</b> The rule can only be to do with the number, sizes, or colors of the cones
+          <select id="comprehension_q4" name="comprehension_q4" class="comprehensionQ">
+             <option value="noresp" SELECTED></option>
+             <option value="true">True</option>
+             <option value="false">False</option>
+           </select>
+      </p>
+      <br/>
+
+      <p><b>5.</b> The rule might have to do with the order in which you performed your tests
+          <select id="comprehension_q5" name="comprehension_q5" class="comprehensionQ">
+             <option value="noresp" SELECTED></option>
+             <option value="true">True</option>
+             <option value="false">False</option>
+           </select>
+      </p>
+      <button class="button" id="comprehension_btn"><span>Check</span></button>
+      <button class="button" id="start_btn" style="display:none;"><span>Start</span></button>
+    </div>
+
+  <!-- HERE THE INTERACTIVE TASK SHIT BEGINS -->
+  <div id = "textORplot" style = "display: none;">
+  </div>
+
+
+</div>
