@@ -267,43 +267,44 @@ $(document).ready(function(){
 
   });
 
-  if (document.getElementById('phase5-text').value.length >= 15) {
-    document.getElementById('phase5btn').prop('disabled',false);
-  }
-
   $('#phase5btn').click(function(){
     ph5_answer = document.getElementById('phase5-text').value;
-    document.getElementById('phase5-div').style.display = "none";
+    if (ph5_answer.length >= 15) {
+      document.getElementById('phase5-div').style.display = "none";
 
-    // displaying iframe (but hide iframe division)
-    document.getElementById('game').style.display = "none";
+      // displaying iframe (but hide iframe division)
+      document.getElementById('game').style.display = "none";
 
-    var iframe = document.getElementById('game_frame');
-    var iframeC = (iframe.contentWindow || iframe.contentDocument);
+      var iframe = document.getElementById('game_frame');
+      var iframeC = (iframe.contentWindow || iframe.contentDocument);
 
-    var sender = document.getElementById("username").value;
-    var room = document.getElementById("groupName").value;
-    var trialdata = iframeC.trialdata;
-    var selected = iframeC.selected;
-    var posit_ix = iframeC.posit_ix;
-    var selectedPost = iframeC.selectedPost;
-    var rule_name = iframeC.rule_name;
+      var sender = document.getElementById("username").value;
+      var room = document.getElementById("groupName").value;
+      var trialdata = iframeC.trialdata;
+      var selected = iframeC.selected;
+      var posit_ix = iframeC.posit_ix;
+      var selectedPost = iframeC.selectedPost;
+      var rule_name = iframeC.rule_name;
 
-    document.getElementById('phase5-text').value = "";
-    socket.emit('storeData', {
-      ph4_answer,
-      ph5_answer,
-      sender,
-      room,
-      trialdata,
-      selected,
-      posit_ix,
-      selectedPost,
-      rule_name,
-      token_id,
-    });
+      document.getElementById('phase5-text').value = "";
+      socket.emit('storeData', {
+        ph4_answer,
+        ph5_answer,
+        sender,
+        room,
+        trialdata,
+        selected,
+        posit_ix,
+        selectedPost,
+        rule_name,
+        token_id,
+      });
 
-    StartIframe2();
+      StartIframe2();
+    }
+      else {
+        alert('Your answer must include at least 15 characters!')
+      }
 
   });
 

@@ -75,7 +75,7 @@ function StartIframe2()
 
     // start iframe from here if this is not the first trial (if it's the first trial, iframe starts from groupchat)
     trial_num = (10 - trials_order.length);
-    if(trial_num > 1 && trial_num < 11){ // if the first trials is finished
+    if(trial_num > 1 && trial_num < 6){ // if the first trials is finished
       console.log("Starting trial ", trial_num);
       var room = document.getElementById('groupName');
       // returning division styles in their initial form
