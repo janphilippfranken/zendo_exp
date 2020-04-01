@@ -267,6 +267,10 @@ $(document).ready(function(){
 
   });
 
+  if (document.getElementById('phase5-text').value.length >= 15) {
+    document.getElementById('phase5btn').prop('disabled',false);
+  }
+
   $('#phase5btn').click(function(){
     ph5_answer = document.getElementById('phase5-text').value;
     document.getElementById('phase5-div').style.display = "none";
