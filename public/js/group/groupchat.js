@@ -450,7 +450,7 @@ $("#done_debrief").click(function(){
 			final_strategy: $('#final_strat').val(),
 			//instructions_duration:start_task_time - start_time,
 			task_duration:end_time - start_task_time,
-			engaging:$("#engagement").val(),
+			trustworthiness:$("#engagement").val(),
 			difficult:$("#difficulty").val(),
 			pol_orient:$("#pol_orientation").val(),
 			token_id: token_id,
