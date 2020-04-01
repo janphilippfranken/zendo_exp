@@ -244,7 +244,7 @@
 <div class="instructions well" id="ins_7" style="display:none;">
     <p>Finally, you will be asked to <b>revise</b> your initial choices based on the choices of the other player. The other player will have performed <b>different experiments</b>, meaning that their knowledge about radiation may help <b>improve</b> the accuracy of your choices (and so increase your bonus).</p>
 
-    <p>You will receive a cash bonus of <b>5 cents</b> for each of the arrangements you guess correctly about (watch video).  This means that you can make a bonus of up to $0.05 &#215 5 radiation types &#215 8 test arrangements = $2. Watch the video below to continue.</p>
+    <p>You will receive a cash bonus of <b>5 cents</b> for each of the arrangements you guess correctly about (watch video).  This means that you can make a bonus of up to $0.05 &#215 5 radiation types &#215 8 test arrangements = $2. Watch the video below to continue.g</p>
 
     <div align=center>
         <video height=450 id="collaborator_vid" name="collaborator_vid" controls="controls" onended="$('#ins_7_btn').prop('disabled', false);" muted>
@@ -274,7 +274,7 @@
 <div class="instructions well" id="comprehension_quiz" style="display:none;">
     <p> We will now ask some quick questions to make sure you understand the task!
 
-    <p><b>1.</b> You will be investigating 10 different types of radiation
+    <p><b>1.</b> You will be investigating 5 different types of radiation
         <select id="comprehension_q1" name="comprehension_q1" class="comprehensionQ">
            <option value="noresp" SELECTED></option>
            <option value="true">True</option>
@@ -359,9 +359,16 @@
   <!-- Phase 5 -->
   <div id="phase5-div" style="display:none; margin:5%">
     <div id="phase5inst" style="font-size:20px; margin-bottom: 15px">
-      Now that you've seen what the other participant chose, <br>please describe once more what makes a scene emit radiation (optional)
+      <p>
+      &#8226 Based on your updated choices, <br>please describe once more what makes a scene emit radiation.<br>
+      &#8226 Try to make your description as <b>specific</b> as possible<br>
+      &#8226 Use <b>unambiguous</b> phrases like "There must be at least..." / "There are at most.." / "There is exactly one..."<br>
+      &#8226 <b>Remember:</b> the rule could be to do with any of the properties of the cones or their relationships, but has nothing to do with the name or what you did on previous tests<br>
+    	&#8226 If you can think of more than one rule that could be true, please list them<br>
+    	&#8226 If you cannot think of any rule that could be true, please say so<br>
+    	&#8226 Type your answer (at least 15 characters) in the box below to continue<br></p>
     </div>
-    <textarea id="phase5-text" placeholder="Please enter your answer here (optional)" rows="4" cols="50" ></textarea>
+    <textarea id="phase5-text" placeholder="Please enter your answer here" rows="4" cols="50" ></textarea>
     <button id="phase5btn" type="button" name="button" style="display:block">Continue</button>
   </div>
 
