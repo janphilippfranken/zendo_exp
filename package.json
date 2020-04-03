@@ -23,6 +23,7 @@
     "dependable": "^1.1.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "express-ip": "^1.0.4",
     "express-promise-router": "^3.0.3",
     "express-session": "^1.17.0",
     "forever": "^2.0.0",

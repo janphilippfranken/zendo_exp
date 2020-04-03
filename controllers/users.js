@@ -1,5 +1,6 @@
 'use strict'
 const User = require('../models/user'); // fetching the userSchema in the user model
+const Ips = require('../models/ips')
 //const {Users} = require('../helpers/usersInGroup'); // EJ6 destructoring to get the Users class
 //const users = new Users();
 // in here we'll have some functions that will pertain
@@ -20,10 +21,24 @@ module.exports = function(_, roomFunctions){
       },
 
       getSignUp:function(req, res){
-        //console.log(req.flash('error')) // this shouldn't be an empty list, check this when u can
-        var roomDetails = roomFunctions.main(io);
-        console.log(roomDetails);
-        return res.render('signup', {messages: req.flash('error'), hasErrors: req.flash('error').length > 0}) // renders a file from the views folder along side with an object
+        const ipInfo = req.ipInfo.ip;
+        // checking to see if the ip exists. if yes, proceed, if no, no take part
+        Ips.exists({ip:ipInfo}, function(err, result) {
+          if(err){
+            res.send(err);
+          }else{ // if there is no error
+            // either 0 or result
+            if(0){ // put 0 in there if you don't want to exclude second-timers. else put result
+              res.render('no-take-part');
+            } else {
+              // //console.log(req.flash('error')) // this shouldn't be an empty list, check this when u can
+              var roomDetails = roomFunctions.main(io);
+              console.log(roomDetails);
+              return res.render('signup', {messages: req.flash('error'), hasErrors: req.flash('error').length > 0}) // renders a file from the views folder along side with an object
+
+            }
+          }
+        });
       },
       postSignUp: function(req, res){
         const newUser = new User();

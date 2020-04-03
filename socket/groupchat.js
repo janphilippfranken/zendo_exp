@@ -19,6 +19,7 @@ module.exports = function(io, Users){
     /////////////////////////////////////////
     socket.on('trialData', data => {
       const room = data.room;
+
       who_finished[room] = []; // initialising here the who_finished array to use it later at the canvas message
       io.to(room).emit('trialDataBackToClient', data);
     });
@@ -28,7 +29,6 @@ module.exports = function(io, Users){
 
 // receive dataURL for the screenshot on the server side and emit it privately
     socket.on('canvasData', (data)=>{
-          console.log("HERE");
 
           trial_num = data.trial_num;
           const sender = data.sender;
@@ -65,6 +65,11 @@ module.exports = function(io, Users){
     // listenning to the joint event coming from the client
     socket.on('join', (params, callback) => { // event is the data sent from the event called join
       socket.join(params.room);// this method allows users to connect to a particular channel, takes argument room name
+      if(typeof(io.sockets.adapter.rooms[params.room]['time']) === 'undefined'){
+        // we'll enter here only when the first user log in
+        io.sockets.adapter.rooms[params.room]['time'] = new Date();
+      }
+
       users.AddUserData(socket.id, params.username, params.room);
       console.log('User '+params.username+' has joined room '+ params.room); // this will be displayed to the terminal
       setTimeout(function(){
@@ -126,6 +131,7 @@ module.exports = function(io, Users){
   socket.on('disconnect', () => {
     var user = users.RemoveUser(socket.id);
     if(user){
+
       console.log(io.sockets.adapter.rooms);
       console.log("User disconnected ");
       console.log(user);

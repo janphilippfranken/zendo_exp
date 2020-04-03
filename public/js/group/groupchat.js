@@ -10,11 +10,36 @@ $(document).ready(function(){
   // we'll need to set up the random variables once
   // and share them between the participants
 
+  // setting up a timer for the participant who joined in first
+  // Set the time we're counting down to
+    var countDownSec = 600;
+
+    // Update the count down every 1 second
+    waiting_lobby = setInterval(function() {
+
+      // Time calculations for minutes and seconds
+      var minutes = Math.floor((countDownSec % (60 * 60)) / 60);
+      var seconds = Math.floor(countDownSec % 60);
+
+      // Output the result in an element with id="demo"
+      document.getElementById("lobby-count-down").innerHTML = minutes+":"+seconds;
+
+      // If the count down is over, write some text
+      if (countDownSec < 1) {
+        clearInterval(waiting_lobby); // deleting the function so it's stop counting
+        document.getElementById("payment").innerHTML = "partial payment (1$)"
+        goto_debrief();
+      }
+      countDownSec = countDownSec - 1;
+    }, 1000);
 
 
   socket = io({reconnection: false}); // we pass here the global io variable (it comes from the views/group.ejs one of the scripts at the bottom of the file (socket.io.js))
   // getting trial data from server
   socket.on('trialDataBackToClient', data =>{
+    // clearing the count down
+    clearInterval(waiting_lobby); // deleting the countdown function so it's stop counting
+
     // parameters of the start function
 
     rules = data.rules;
@@ -48,14 +73,16 @@ $(document).ready(function(){
         var iframeContent = (iframe.contentWindow || iframe.contentDocument);
         try {
           iframeContent.Start(rules[rand_trial], examples, test_cases, rule_names[rand_trial], rand_counter, posit_ix, trial_num);
+          document.getElementById('game').style.display = "none";
+          // Adding the instructions Here
+          document.getElementById('ins_1').style.display = "block";
         }
         catch(err) {
-
-          location.reload();
+          // if something happens this player goes to deb
+          document.getElementById("payment").innerHTML = "partial payment (4$)";
+          goto_debrief();
         } // closing catch
-        document.getElementById('game').style.display = "none";
-        // Adding the instructions Here
-        document.getElementById('ins_1').style.display = "block";
+
 
 
   } // closing of if statement
@@ -134,12 +161,14 @@ $(document).ready(function(){
     if (users.length === 1){
 
       // THIS WILL EVALUATE TO TRUE ONLY WHEN SOMEBODY LEAVES DURING THE GAME
-
+      document.getElementById("payment").innerHTML = "partial payment (4$)"
       goto_debrief();
       document.getElementById('user-left').style.display = "block";
       $.notify("Unfortunately, user " +data.user_left.name+ " just left the game");
 
     } else if (users.length === 2){
+
+      try{
       // only player 1 will ever reach that point
       // if there are two users, get the data game for the trial
       // and emmit it back to the server
@@ -179,9 +208,17 @@ $(document).ready(function(){
         posit_ix,
         trial_num,
         sender, room, players_info});
+
+      } // closing of try
+      catch(err){
+        document.getElementById("payment").innerHTML = "partial payment (4$)";
+        goto_debrief();
+      }
+
     }//closing of else if
     params = data.params;
     users = data.users;
+
 
   }); // closing of usersList
 
@@ -450,7 +487,7 @@ $("#done_debrief").click(function(){
 			final_strategy: $('#final_strat').val(),
 			//instructions_duration:start_task_time - start_time,
 			task_duration:end_time - start_task_time,
-			trustworthiness:$("#engagement").val(),
+			engaging:$("#engagement").val(),
 			difficult:$("#difficulty").val(),
 			pol_orient:$("#pol_orientation").val(),
 			token_id: token_id,
@@ -475,7 +512,9 @@ $("#done_debrief").click(function(){
 goto_debrief = function () {
   $("#ins_1").hide();
   $("#game").hide();
+  $('#waiting_area').hide();
   $("#debrief").show();
+
 };
 
 goto_task = function () {

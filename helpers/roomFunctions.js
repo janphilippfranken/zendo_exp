@@ -3,7 +3,8 @@ return{
               main: function(io){ // THIS FUNCTION GIVES STRAIGHT THE NAME OF THE ROOM BE IT NEW OR OLD
                 var allRooms = this.getRooms(io); // getting all the rooms which have 5 letter (ignoring the personal ids)
                 var crowding = this.roomsCrowding(allRooms, io);
-                var availableRooms = this.availableRooms(crowding);
+                var timeStamp = this.roomsTime(allRooms, io);
+                var availableRooms = this.availableRooms(crowding, timeStamp);
                 var roomToGetIn = this.getInRoom(availableRooms);
                 var usersInRooms = this.usersInRooms(io);
                 return {
@@ -11,7 +12,8 @@ return{
                   "allRooms" : allRooms,
                   "roomToGetIn": roomToGetIn,
                   "crowding": crowding,
-                  "usersInRooms":usersInRooms
+                  "usersInRooms":usersInRooms,
+                  "timeStamp":timeStamp
                       };
 },
 
@@ -27,18 +29,27 @@ return{
             },
 
             roomsCrowding:function(rooms, io){
-              var crowding = {};// an objecg with rooms and lengths
+              var crowding = {};// an objecg with rooms and lengths and time
               _.forEach(rooms, function(room, i) {
               var clients = io.sockets.adapter.rooms[room];
                 crowding[room] = clients.length;
               });
               return crowding;
             },
-
-            availableRooms:function (crowding){
+            roomsTime:function(rooms, io){
+              var timeStamp = {};// an objecg with rooms and lengths and time
+              _.forEach(rooms, function(room, i) {
+              var clients = io.sockets.adapter.rooms[room];
+                timeStamp[room] = clients.time;
+              });
+              return timeStamp;
+            },
+            availableRooms:function (crowding, timeStamp){
               var availableRooms = [];// an arrary with true and false
               _.forEach(crowding, function(length, room) {
-                if (crowding[room] === 1){
+                var remainingT =  new Date() - timeStamp[room];
+                console.log(remainingT);
+                if (crowding[room] === 1 && remainingT < 600000){ // if it's active for less than 10 mins,
                   availableRooms.push(room);
                 }
               });

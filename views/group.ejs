@@ -112,9 +112,14 @@
 <!-- Waiting for particiant division -->
 <div id="waiting_area" style="background:lavenderblush">
   <div style = "text-align:center; font-size:20px;">
-    Hey <%= username %>, thank you for joining our experiment! <br> Please enjoy this
-    cutie while waiting for another participant to join :) <br><br>
-  </div>
+    Hey <%= username %>, thank you for joining our experiment! <br>
+    Please enjoy this cutie while waiting for another participant to join :).<br>
+      <div style = "text-align:center; font-size:15px;">
+        If no one enters within <strong id ="lobby-count-down" ></strong>
+        you will automatically redirected to a new page where you will get paid. <br><br>
+      </div>
+
+    </div>
   <div align=center>
       <video  height=300 id="cat_vid" name="construction_mov" autoplay muted loop>
           <source src = "/movies/cat_vid.mp4" type="video/mp4">
@@ -217,7 +222,7 @@
 
     <p>After your experiments, you will be tested on the cause of this kind of radiation.  You will be shown 8 new arrangements.  Select which you think emit radiation when tested.  <i>You must select at least one and less than all eight.</i></p>
 
-    <p>Play the video below to continue.</p>
+    <p>You will receive a cash bonus of <b>5 cents</b> for each of the arrangements you guess correctly about (watch video).  This means that you can make a bonus of up to $0.05 &#215 5 radiation types &#215 8 test arrangements = $2.  Play the video below to continue.</p>
 
     <div align=center>
         <video controls height=300 id="selection_vid" name="selection_vid" controls="controls" onended="$('#ins_5_btn').prop('disabled', false);" muted>
@@ -244,14 +249,12 @@
 <div class="instructions well" id="ins_7" style="display:none;">
     <p>Finally, you will be asked to <b>revise</b> your initial choices based on the choices of the other player. The other player will have performed <b>different experiments</b>, meaning that their knowledge about radiation may help <b>improve</b> the accuracy of your choices (and so increase your bonus).</p>
 
-    <p>You will receive a cash bonus of <b>5 cents</b> for each of the arrangements you guess correctly about (watch video).  This means that you can make a bonus of up to $0.05 &#215 5 radiation types &#215 8 test arrangements = $2. Watch the video below to continue.</p>
-
     <div align=center>
         <video height=450 id="collaborator_vid" name="collaborator_vid" controls="controls" onended="$('#ins_7_btn').prop('disabled', false);" muted>
             <source src="/movies/collaborator.mov"  type="video/mov">
             <source src="/movies/collaborator.mp4"  type="video/mp4">
         </video>
-    </div><br>
+    </div>
 
     <p><u>This is a really tough assignment, so do the best you can.  Do not worry if you cannot work everything out.<br><br>Good luck!</u></p>
     <button class="button" id="ins_7_btn" disabled=""><span>Continue</span></button>
@@ -364,9 +367,9 @@
       &#8226 Try to make your description as <b>specific</b> as possible<br>
       &#8226 Use <b>unambiguous</b> phrases like "There must be at least..." / "There are at most.." / "There is exactly one..."<br>
       &#8226 <b>Remember:</b> the rule could be to do with any of the properties of the cones or their relationships, but has nothing to do with the name or what you did on previous tests<br>
-    	&#8226 If you can think of more than one rule that could be true, please list them<br>
-    	&#8226 If you cannot think of any rule that could be true, please say so<br>
-    	&#8226 Type your answer (at least 15 characters) in the box below to continue<br></p>
+      &#8226 If you can think of more than one rule that could be true, please list them<br>
+      &#8226 If you cannot think of any rule that could be true, please say so<br>
+      &#8226 Type your answer (at least 15 characters) in the box below to continue<br></p>
     </div>
     <textarea id="phase5-text" placeholder="Please enter your answer here" rows="4" cols="50" ></textarea>
     <button id="phase5btn" type="button" name="button" style="display:block">Continue</button>
@@ -376,24 +379,24 @@
 
   <!-- Debriefing -->
   <div id="debrief" class="frame" style="display:none;">
-    <div id="user-left" style="display:none; font-sieze:40px; text-align:center;margin:5% 0">
+    <div id="user-left" style="display:none; font-size:30px; text-align:center;margin:5% 0">
       Unfortunately, the other user left the game. <br>
       You will compensate for your time after you complete this form.<br>
       <br>
 
     </div>
   	<h1>Demographics and Debrief</h1>
-  	<p>You are finished!  Thank you for your contributions to science. You will be eligible for full payment once you answer the following questions.</p>
+  	<p>You are finished!  Thank you for your contributions to science. You will be eligible for <span id = "payment">full payment</span> once you answer the following questions.</p>
   	<p> <span style="font-weight:bold">Note</span>:  To continue, please answer <span style="color:red">all questions</span>.</p>
   	<div class="instructions well">
   	    <form id="postquiz" action="debrief" method="post">
   			<p>Do you have any comments regarding the experiment?</p>
   		    <textarea name="feedback" id="feedback" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
   			<br>
-  			<p>How did you select which scenes emit radiation when making your <b>initial choices</b>? Did you have a specific strategy?</p>
+  			<p>How did you decide between candidates when providing your <b>initial recommendation</b>? Did you have a specific strategy?</p>
   		    <textarea name="init_strat" id="init_strat" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
   			<br>
-  			<p>How did you select which scenes emit radiation when making your <b>final choices</b>? Did you have a specific strategy?</p>
+  			<p>How did you decide between candidates when providing your <b>final recommendation</b>? Did you have a specific strategy?</p>
   		    <textarea name="final_strat" id="final_strat" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
   			<br>
   	        <p><b>1.</b> How old are you?:
@@ -412,7 +415,7 @@
   	        <!-- beginning of a question -->
   	        <div class="row question">
   	            <div class="col-md-8">
-  	                <b>3.</b>On a scale of 1-10 (where 10 is the highest trust), please rate how <b>TRUSTWORTHY</b> you found the other player was:
+  	                <b>3.</b>On a scale of 1-10 (where 10 is the most engaged), please rate how <b>ENGAGING</b> you found the learning task:
   	            </div>
   	            <div class="col-md-4">
   	                <select id="engagement" name="engagement" class="posttestQ">

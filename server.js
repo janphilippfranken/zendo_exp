@@ -18,6 +18,8 @@ const socketIO = require('socket.io')
 const {Users} = require('./helpers/usersInGroup'); // EJ6 destructoring to get the Users class
 const compression = require('compression'); // neccessary for web deployment (compresses the files, makes app faster)
 const helmet = require('helmet'); // security porpuses
+const expressip = require('express-ip'); // getting users ip details
+
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -71,6 +73,7 @@ container.resolve(function(users, _, group){
 
     app.use(compression());
     app.use(helmet());
+    app.use(expressip().getIpInfoMiddleware);
 
     // we want express to make use of every file inside the public folder
     app.use(express.static('public')); // with this, every file in public folder
