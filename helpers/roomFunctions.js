@@ -49,7 +49,7 @@ return{
               _.forEach(crowding, function(length, room) {
                 var remainingT =  new Date() - timeStamp[room];
                 console.log(remainingT);
-                if (crowding[room] === 1 && remainingT < 600000){ // if it's active for less than 10 mins,
+                if ((crowding[room] === 1) && (remainingT < 600000) && (remainingT > 3000)){ // if it's active for less than 10 mins and older than 3 seconds,
                   availableRooms.push(room);
                 }
               });
