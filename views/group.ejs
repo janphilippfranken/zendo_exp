@@ -25,7 +25,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="http://lib.ivank.net/ivank.js"></script>
+    <!-- <script src="http://lib.ivank.net/ivank.js"></script> -->
     <script src="/js/lib/underscore-min.js" type="text/javascript"></script>
     <script src="/js/lib/notify.min.js" type="text/javascript"></script>
 
@@ -393,10 +393,10 @@
   			<p>Do you have any comments regarding the experiment?</p>
   		    <textarea name="feedback" id="feedback" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
   			<br>
-  			<p>How did you decide between candidates when providing your <b>initial recommendation</b>? Did you have a specific strategy?</p>
+  			<p>How did you decide which scenes emit radiation during your <b>initial choices</b>? Did you have a specific strategy?</p>
   		    <textarea name="init_strat" id="init_strat" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
   			<br>
-  			<p>How did you decide between candidates when providing your <b>final recommendation</b>? Did you have a specific strategy?</p>
+  			<p>How did you decide which scenes emit radiation during your <b>final choices choices</b> (after seeing the choices of the other player)? Did you have a specific strategy?</p>
   		    <textarea name="final_strat" id="final_strat" class="posttestQ" style="width:760px; height:100px;"  ></textarea>
   			<br>
   	        <p><b>1.</b> How old are you?:
@@ -415,22 +415,22 @@
   	        <!-- beginning of a question -->
   	        <div class="row question">
   	            <div class="col-md-8">
-  	                <b>3.</b>On a scale of 1-10 (where 10 is the most engaged), please rate how <b>ENGAGING</b> you found the learning task:
+  	                <b>3.</b>On a scale of 1-10 (where 10 is the highest trust), please rate how <b>TRUSTWORHTY</b> you found the other player was:
   	            </div>
   	            <div class="col-md-4">
   	                <select id="engagement" name="engagement" class="posttestQ">
   	                    <option value="--" SELECTED>
-  	                    <option value="10">10 - Very engaging</option>
+  	                    <option value="10">10 - Very trustworthy</option>
   	                    <option value="9">9</option>
   	                    <option value="8">8</option>
   	                    <option value="7">7</option>
   	                    <option value="6">6</option>
-  	                    <option value="5">5 - Moderately</option>
+  	                    <option value="5">5 - Moderately trustworthy</option>
   	                    <option value="4">4</option>
   	                    <option value="3">3</option>
   	                    <option value="2">2</option>
   	                    <option value="1">1</option>
-  	                    <option value="0">0 - Not engaged</option>
+  	                    <option value="0">0 - Not trustworhy</option>
   	                </select>
   	            </div>
   	        </div>
