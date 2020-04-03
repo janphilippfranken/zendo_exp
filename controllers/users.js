@@ -1,5 +1,5 @@
 'use strict'
-const User = require('../models/user'); // fetching the userSchema in the user model
+// const User = require('../models/user'); // fetching the userSchema in the user model
 const Ips = require('../models/ips')
 //const {Users} = require('../helpers/usersInGroup'); // EJ6 destructoring to get the Users class
 //const users = new Users();
@@ -41,16 +41,16 @@ module.exports = function(_, roomFunctions){
         });
       },
       postSignUp: function(req, res){
-        const newUser = new User();
+        // const newUser = new User();
 
-        newUser.username = req.body.username;
-        newUser.fullname = req.body.username;
-        newUser.email = req.body.username;
-        newUser.password = new Date();
+        // newUser.username = req.body.username;
+        // newUser.fullname = req.body.username;
+        // newUser.email = req.body.username;
+        // newUser.password = new Date();
 
-        newUser.save(function(err) {
-          if (err)return handleError(err);
-        });
+        // newUser.save(function(err) {
+        //   if (err)return handleError(err);
+        // });
 
         var roomDetails = roomFunctions.main(io);
         console.log(roomDetails);
