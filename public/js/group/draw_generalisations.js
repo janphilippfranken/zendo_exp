@@ -167,7 +167,8 @@ function draw_generalisations(data, choices, posit_ix, div_id) {
 
           trial_pics[t].y=Math.floor(posit_ix[t-8]/4)*((stage.stageHeight*frame_height)/4) - stage.stageHeight/2.67;
 
-
+          var t1 = new TextField();
+          t1.selectable = false; // default is true
 
 
 

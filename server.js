@@ -89,7 +89,7 @@ container.resolve(function(users, _, group){
     //app.use(validator()); //validates user credentials etc
 
     app.use(session({ // allows to save sessions
-      secret: process.env.SECRET_KEY,
+      secret:process.env.SECRET_KEY,
       resave: true,
       saveUninitialized: true,
       saveInitialized: true,

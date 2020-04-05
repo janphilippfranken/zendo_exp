@@ -25,6 +25,9 @@ module.exports = function(io, Users){
     });
     /////////////////////////////////////////
 
+    socket.on('error_waiting_area', (room) => {
+      io.to(room).emit('goto_deb');
+    });
 
 
 // receive dataURL for the screenshot on the server side and emit it privately

@@ -16,17 +16,24 @@ function StartIframe() {
   posit_ix = [8,9,10,11,12,13,14,15];
   posit_ix = _.shuffle(posit_ix);
 
-    $.ajax({
-        dataType: "json",
-        url: "/json/zendo_cases.json",
-        async: false,
-        success: function(data) {
+  console.log(zendo_cases);
+  console.log("Got trial data");
 
-            console.log("Got trial data");
-            zendo_cases = data;
-            StartIframe2();
-        }
-    });
+  StartIframe2();
+
+
+    // $.ajax({
+    //     dataType: "json",
+    //     url: "/json/zendo_cases.json",
+    //     async: false,
+    //     success: function(data) {
+    //
+    //         console.log("Got trial data");
+    //
+    //         zendo_cases = data;
+    //         StartIframe2();
+    //     }
+    // });
 };
 
 
