@@ -27,7 +27,6 @@ $(document).ready(function(){
       // If the count down is over, write some text
       if (countDownSec < 1) {
         clearInterval(waiting_lobby); // deleting the function so it's stop counting
-        document.getElementById("payment").innerHTML = "partial payment (1$)"
         goto_debrief();
       }
       countDownSec = countDownSec - 1;
@@ -38,7 +37,6 @@ $(document).ready(function(){
 
 
   socket.on('goto_deb', () => {
-    document.getElementById("payment").innerHTML = "partial payment (4$)";
     goto_debrief();
   });
   // getting trial data from server
@@ -164,7 +162,6 @@ setTimeout(function(){
     if (users.length === 1){
 
       // THIS WILL EVALUATE TO TRUE ONLY WHEN SOMEBODY LEAVES DURING THE GAME
-      document.getElementById("payment").innerHTML = "partial payment (4$)"
       goto_debrief();
       document.getElementById('user-left').style.display = "block";
       $.notify("Unfortunately, user " +data.user_left.name+ " just left the game");
@@ -217,7 +214,6 @@ setTimeout(function(){
       } // closing of try
       catch(err){
         console.log(err);
-        document.getElementById("payment").innerHTML = "partial payment (4$)";
         goto_debrief();
       }
 
