@@ -12,6 +12,8 @@ const trialSchema = mongoose.Schema({ // creating the schema (data structure whi
   rule: {type: String, unique: false},
   ph4_answer: {type: String, unique: false},
   ph5_answer: {type: String, unique: false},
+  expertise_q: {type: String, unique: false},
+  trustworthy_q: {type: String, unique: false},
   token_id: {type: String, unique: false}
 
 

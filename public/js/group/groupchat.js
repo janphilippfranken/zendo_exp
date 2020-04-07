@@ -308,7 +308,12 @@ setTimeout(function(){
 
   $('#phase5btn').click(function(){
     ph5_answer = document.getElementById('phase5-text').value;
-    if (ph5_answer.length >= 15) {
+    // collecting data from accuracy
+    ew_q_list = []
+    $('#ewQ_FORM input:checked').each(function(){
+      ew_q_list.push(this.value);
+    });
+    if (ph5_answer.length >= 15 && ew_q_list.length === 2) {
       document.getElementById('phase5-div').style.display = "none";
       // displaying iframe (but hide iframe division)
       document.getElementById('game').style.display = "none";
@@ -321,10 +326,18 @@ setTimeout(function(){
       var posit_ix = iframeC.posit_ix;
       var selectedPost = iframeC.selectedPost;
       var rule_name = iframeC.rule_name;
+      // removing option of the accuacy question
+      [].slice.call(document.querySelectorAll('form input[type="radio"]')).filter(function(element, index) {
+        return element.checked = false;
+      })
       document.getElementById('phase5-text').value = "";
+      expertise_q = ew_q_list[0];
+      trustworthy_q = ew_q_list[1];
       socket.emit('storeData', {
         ph4_answer,
         ph5_answer,
+        trustworthy_q,
+        expertise_q,
         sender,
         room,
         trialdata,
@@ -337,7 +350,7 @@ setTimeout(function(){
       StartIframe2();
     }
       else {
-        alert('Your answer must include at least 15 characters!')
+        alert('Your answer must include at least 15 characters, and you also need to provide an anser for both subsequent questions!')
       }
   });
 
