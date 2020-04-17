@@ -12,7 +12,7 @@ $(document).ready(function(){
 
   // setting up a timer for the participant who joined in first
   // Set the time we're counting down to
-    var countDownSec = 20;
+    var countDownSec = 600;
 
     // Update the count down every 1 second
     waiting_lobby = setInterval(function() {
@@ -27,7 +27,7 @@ $(document).ready(function(){
       // If the count down is over, write some text
       if (countDownSec < 1) {
         clearInterval(waiting_lobby); // deleting the function so it's stop counting
-        goto_debrief();
+        // goto_debrief();
         window.location.replace("http://www.SorryTooLate.com/");
       }
       countDownSec = countDownSec - 1;
