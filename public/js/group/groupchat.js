@@ -23,6 +23,7 @@ $(document).ready(function(){
         $.notify("You are logged out: the server didn't get any response for more than 2 minutes", {  autoHideDelay: 105000});
         socket.emit('drop_me_out');
         clearInterval(no_focus);
+        window.location.replace("http://www.SorryTooLate.com/");
         }
         console.log(no_focus);
         countDownSec = countDownSec - 1;
