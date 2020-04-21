@@ -21,7 +21,7 @@
   </div>
 <div id="landing">
 <div id="information">
-<h1 align="center">The University of Edinburgh, Psychology</h1>
+<h1 id="UoE" align="center">The University of Edinburgh, Psychology</h1>
 <div class="frame">
   <div id="info_1">
   <h2>Information for participants</h2>
@@ -164,6 +164,9 @@ var isMobile = function() {
 if (isMobile() || isMobileOrTablet()) {
 	alert('Unfortunately, you need to be on a desktop or laptop computer in order to take part in this experiment. In any case thank you very much for the interest.')
   $('#info_1').hide();
+  $('#timer').hide();
+  $('#consent-btn').hide();
+  $('#UoE').hide();
 
 };
 
