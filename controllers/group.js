@@ -4,10 +4,10 @@ module.exports = function(_){
 
     return {
       SetRouting: function(router){
-        router.get('/group/:name', this.groupPage); // the :name allows us to take is after the /    you can find it in controllers/users.js: successRedirect
+        router.get('/group', this.groupPage); // the :name allows us to take is after the /    you can find it in controllers/users.js: successRedirect
       },
       groupPage: function(req, res){
-        const room = req.params.name;
+        //const room = req.params.name;
         // saving ip of the client
         const ipInfo = req.ipInfo.ip;
         const newIp = new Ips();
@@ -16,8 +16,8 @@ module.exports = function(_){
         // newIp.save(function(err) {
         //   if (err)return handleError(err);
         // });
+        res.render('group', {groupName:'room', username: req.session.username});
 
-        res.render('group', {groupName:room, username: req.session.username});
       }
          }
 }

@@ -1,7 +1,38 @@
 //  CLIENT SIDE
 
 $(document).ready(function(){
+  // 2 functions for when losing focus
+  const gainFocus = (e) => {
+    try {
+      clearInterval(no_focus);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const lostControl = (e) => {
 
+    if (document.hasFocus()){
+      // do nothing
+    } else {
+
+      let countDownSec = 120;
+
+      // Update the count down every 1 second
+      no_focus = setInterval(function() {
+      if (countDownSec < 1) {
+        $.notify("You are logged out: the server didn't get any response for more than 2 minutes", {  autoHideDelay: 105000});
+        socket.emit('drop_me_out');
+        clearInterval(no_focus);
+        }
+        console.log(no_focus);
+        countDownSec = countDownSec - 1;
+      }, 1000);
+
+    } // else statement
+  };
+  // adding event listeners for when losing and gaining focus
+  window.addEventListener('blur', lostControl);
+  window.addEventListener('focus', gainFocus);
 
   /////////////////////////////////////////////////
   // setting up the game
@@ -27,12 +58,12 @@ $(document).ready(function(){
       // If the count down is over, write some text
       if (countDownSec < 1) {
         clearInterval(waiting_lobby); // deleting the function so it's stop counting
-        // goto_debrief();
-        window.location.replace("http://www.SorryTooLate.com/");
+        goto_debrief();
       }
       countDownSec = countDownSec - 1;
     }, 1000);
 
+    gameStarted = false; // the game hasn't started yet (need this for when people drop out before the end of the instructions)
 
   socket = io({reconnection: false}); // we pass here the global io variable (it comes from the views/group.ejs one of the scripts at the bottom of the file (socket.io.js))
 
@@ -69,15 +100,19 @@ $(document).ready(function(){
     players_info = data.players_info;
 
 
-
+    start_task_time = new Date();
     //document.getElementById('game').style.display = "block";
-
+  document.getElementById("groupName").value = data.room;
   var iframe = document.getElementById("game_frame");
   document.getElementById('game').style.visibility = "visible";
   document.getElementById('waiting_area').style.display = "none";
   if (iframe) {
       var iframeContent = (iframe.contentWindow || iframe.contentDocument);
+      while (typeof iframeContent.Start === 'undefined') {
+          //console.log('h');
+      }
       try {
+
         iframeContent.Start(rules[rand_trial], examples, test_cases, rule_names[rand_trial], rand_counter, posit_ix, trial_num);
         document.getElementById('game').style.display = "none";
         // Adding the instructions Here
@@ -140,20 +175,15 @@ $(document).ready(function(){
   });
 
   socket.on('connect', function(){ // this listens to the connect event each time a user is connected
-  // emmitting joint events (event only to one room)
-  var params = {
-      room: group,
-      username: username
-    }
-setTimeout(function(){
-  socket.emit('join', params, function(){
-    start_task_time = new Date();
+    // emmitting joint events (event only to one room)
     token_id = socket.id;
-      console.log('User '+params.username+' has joined room '+ params.room)
-    });
-}, 5000);
+    var params = {
+        room: group,
+        username: username,
+        token_id: token_id
+      }
 
-
+    socket.emit('join', params);
   });
 
 
@@ -163,9 +193,18 @@ setTimeout(function(){
     if (users.length === 1){
 
       // THIS WILL EVALUATE TO TRUE ONLY WHEN SOMEBODY LEAVES DURING THE GAME
-      goto_debrief();
-      document.getElementById('user-left').style.display = "block";
-      $.notify("Unfortunately, user " +data.user_left.name+ " just left the game");
+      if (gameStarted){
+        document.getElementById('user-left').style.display = "block";
+        $.notify("Unfortunately, user " +data.user_left.name+ " just left the game");
+        goto_debrief();
+      } else {
+        $.notify("Unfortunately, user " +data.user_left.name+ " just left the game. Please wait until another participant joins.");
+        setTimeout(() => {
+          window.onbeforeunload = '';
+          location.reload(true);
+        },3000);
+        // go from the beginning and make myself available
+      }
 
     } else if (users.length === 2){
 
@@ -179,7 +218,8 @@ setTimeout(function(){
 
 
       var sender = document.getElementById("username").value; // this is the name of the player1
-      var room = document.getElementById("groupName").value;
+      const room = data.params.room;
+      document.getElementById("groupName").value = room;
 
 
       var user1 = sender; // this is the name of the user1 (the participant who enters first)
@@ -439,6 +479,7 @@ setTimeout(function(){
   $('#start_btn').click(function () {
     $('#comprehension_quiz').hide();
     $('#game').show();
+    gameStarted = true;
     document.getElementById("game").style.visibility = "visible";
   });
 
@@ -526,7 +567,38 @@ goto_debrief = function () {
   $("#debrief").show();
 
 };
+// we don't need this after all, we're using reload
+const goto_beginning = () => {
+    $('#ins_1').hide();
+    $('#ins_2').hide();
+    $('#ins_3').hide();
+    $('#ins_4').hide();
+    $('#ins_5').hide();
+    $('#ins_6').hide();
+    $('#ins_7').hide();
+    $('#ins_8').hide();
+    $('#comprehension_quiz').hide();
+    document.getElementById('waiting_area').style.display = "block";
+    var countDownSec = 600;
 
+    // Update the count down every 1 second
+    waiting_lobby = setInterval(function() {
+
+      // Time calculations for minutes and seconds
+      var minutes = Math.floor((countDownSec % (60 * 60)) / 60);
+      var seconds = Math.floor(countDownSec % 60);
+
+      // Output the result in an element with id="demo"
+      document.getElementById("lobby-count-down").innerHTML = minutes+":"+seconds;
+
+      // If the count down is over, write some text
+      if (countDownSec < 1) {
+        clearInterval(waiting_lobby); // deleting the function so it's stop counting
+        goto_debrief();
+      }
+      countDownSec = countDownSec - 1;
+    }, 1000);
+};
 goto_task = function () {
   $("#ins_1").hide();
   $("#game").show();

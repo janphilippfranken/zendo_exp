@@ -32,7 +32,7 @@ module.exports = function(_, roomFunctions){
             } else {
               // //console.log(req.flash('error')) // this shouldn't be an empty list, check this when u can
               var roomDetails = roomFunctions.main(io);
-              console.log(roomDetails);
+              //console.log(roomDetails);
               return res.render('signup', {messages: req.flash('error'), hasErrors: req.flash('error').length > 0}) // renders a file from the views folder along side with an object
 
             }
@@ -40,15 +40,21 @@ module.exports = function(_, roomFunctions){
         });
       },
       postSignUp: function(req, res){
-      
-
-        var roomDetails = roomFunctions.main(io);
-        console.log(roomDetails);
-        var room = roomDetails["roomToGetIn"];
-
+        //
+        //
+        // var roomDetails = roomFunctions.main(io);
+        // console.log(roomDetails);
+        // var room = roomDetails["roomToGetIn"];
+        // var isNew = roomDetails['isNew'];
 
         req.session.username = req.body.username;
-        return  res.redirect('/group/'+room);
+        // if(!isNew){ // if the room it' not new, wait 5 seconds to make sure the content is available
+        //   setTimeout(() => {
+        return  res.redirect('/group');//+room);
+        //   }, 5000)
+        // } else { // if the room is new, go in straight away
+        //   return  res.redirect('/group/'+room);
+        // }
       }
     }
 

@@ -1,12 +1,13 @@
 // SERVER SIDE
 const trialSchema = require('../models/trial'); // fetching the userSchema in the user model
 const debriefSchema = require('../models/debrief'); // fetching the userSchema in the user model
+const roomFunctions = require('../helpers/roomFunctions');
 
 module.exports = function(io, Users){
   // bringing in the users class with all the methods to remove, add etc uers from the user list
   users = new Users(); // the new keyword creates a new constructor (instance in python lang?)
-  user_names = {}
-
+  user_names = {};
+  trial_num = {};
   who_finished = {};
 
 
@@ -18,8 +19,7 @@ module.exports = function(io, Users){
     // Getting trial data from client
     /////////////////////////////////////////
     socket.on('trialData', data => {
-      const room = data.room;
-
+      let room = data.room;
       who_finished[room] = []; // initialising here the who_finished array to use it later at the canvas message
       io.to(room).emit('trialDataBackToClient', data);
     });
@@ -33,7 +33,7 @@ module.exports = function(io, Users){
 // receive dataURL for the screenshot on the server side and emit it privately
     socket.on('canvasData', (data)=>{
 
-          trial_num = data.trial_num;
+          trial_num[data.room] = data.trial_num;
           const sender = data.sender;
           const message = data.trialdata;
           const room = data.room;
@@ -63,25 +63,47 @@ module.exports = function(io, Users){
 
 
 
-
-
     // listenning to the joint event coming from the client
-    socket.on('join', (params, callback) => { // event is the data sent from the event called join
-      socket.join(params.room);// this method allows users to connect to a particular channel, takes argument room name
-      if(typeof(io.sockets.adapter.rooms[params.room]['time']) === 'undefined'){
-        // we'll enter here only when the first user log in
-        io.sockets.adapter.rooms[params.room]['time'] = new Date();
-      }
+    socket.on('join', (params) => { // event is the data sent from the event called join
+      // decide which room to join here
+      socket.username = params.username;
+      socket.isAvailable = true;
 
-      users.AddUserData(socket.id, params.username, params.room);
-      console.log('User '+params.username+' has joined room '+ params.room); // this will be displayed to the terminal
-      setTimeout(function(){
-        socket.broadcast.to(params.room).emit('usersList', {params:params, users:users.GetUsersList(params.room)}); // sending the userlist to the client from getting it using the function defined in the Users class
-      },500);
+      const connClients = Object.keys(io.sockets.connected);
+      const idxOfI = connClients.indexOf(params.token_id);
+      connClients.splice(idxOfI, 1); // connected clients without me
+      for(let clID of connClients){
+         if(io.sockets.connected[clID].isAvailable){ // if available client is found
+                // set my availability
+                socket.isAvailable = false;
+                // set neighbours availability
+                io.sockets.connected[clID].isAvailable = false;
+                // find a room
+                let roomDetails = roomFunctions.main(io);
+                params.room = roomDetails['roomToGetIn'];
+                // put us in the room
+                socket.join(params.room);// this method allows users to connect to a particular channel, takes argument room name
+                io.sockets.connected[clID].join(params.room);// this method allows users to connect to a particular channel, takes argument room name
+                users.GetUsersList(params.room)
+                users.AddUserData(socket.id, socket.username, params.room);
+                users.AddUserData(io.sockets.connected[clID].id, io.sockets.connected[clID].username, params.room);
+
+                // setting up the time the room started to exist
+                if(typeof(io.sockets.adapter.rooms[params.room]['time']) === 'undefined'){
+                  // we'll enter here only when the first user log in
+                  io.sockets.adapter.rooms[params.room]['time'] = new Date();
+                }
+                setTimeout(() => {
+                  console.log('Users '+socket.username+' and '+io.sockets.connected[clID].username+'  have joined room '+ params.room); // this will be displayed to the terminal
+                  socket.broadcast.to(params.room).emit('usersList', {params:params, users:users.GetUsersList(params.room)}); // sending the userlist to the client from getting it using the function defined in the Users classz
+                }, 5000);
+            }
+        }
+
+        console.log();
 
 
-
-      callback(); // this callback is neccessary because when we sent the message from
+      //callback(); // this callback is neccessary because when we sent the message from
       // the client side, we also added a function ('join', params, function) so
       // the callback reflects that function
     });
@@ -107,6 +129,7 @@ module.exports = function(io, Users){
         if (err)return handleError(err);
       });
 
+      users.RemoveUser(socket.id);
       socket.disconnect();
     });
 
@@ -115,7 +138,7 @@ module.exports = function(io, Users){
       const new_trial = new trialSchema();
       new_trial.username = data.sender;
       new_trial.room = data.room;
-      new_trial.trial = trial_num;
+      new_trial.trial = trial_num[data.room];
       new_trial.data = data.trialdata;
       new_trial.prior = data.selected;
       new_trial.posterior = data.selectedPost;
@@ -129,17 +152,28 @@ module.exports = function(io, Users){
       new_trial.save(function(err) {
         if (err)return handleError(err);
       });
-      console.log("Got the data from user: ", data.sender, "and trial: ", trial_num);
+      console.log("Got the data from user: ", data.sender, "and trial: ", trial_num[data.room]);
     });
   // creating a listenning event that every time a user disconnects, then the
   // function from the User class RemoveUser is going to be triggered and Remove user data
-  socket.on('disconnect', () => {
+  socket.on('drop_me_out', () => {
+    socket.disconnect();
     var user = users.RemoveUser(socket.id);
     if(user){
 
       console.log(io.sockets.adapter.rooms);
-      console.log("User disconnected ");
+      console.log("User "+socket.username+" disconnected ");
       console.log(user);
+      io.to(user.room).emit('usersList', {params:'', users:users.GetUsersList(user.room), user_left:user}); // getting the user list using the function defined in the Users class
+    }
+  });
+
+  socket.on('disconnect', () => {
+    var user = users.RemoveUser(socket.id);
+    console.log(user);
+    if(user){
+      console.log(io.sockets.adapter.rooms);
+      console.log("User "+socket.username+" disconnected ");
       io.to(user.room).emit('usersList', {params:'', users:users.GetUsersList(user.room), user_left:user}); // getting the user list using the function defined in the Users class
     }
   });

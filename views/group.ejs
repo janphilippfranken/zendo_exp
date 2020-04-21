@@ -114,7 +114,7 @@
     Please enjoy this cutie while waiting for another participant to join :).<br>
       <div style = "text-align:center; font-size:15px;">
         If no one enters within <strong id ="lobby-count-down" ></strong>
-        this window will close after the waiting time is up. <br><br>
+        you will automatically redirected to a new page where you will get paid. <br><br>
       </div>
 
     </div>
@@ -345,7 +345,7 @@
 
     <!-- Questions of phase 5 -->
     <form id="ewQ_FORM">
-                    <p>On a scale of 0-10 (where 10 is the highest possible expertise), please rate how expert the other player was in this round.</p>
+                    <h3>On a scale of 0-10 (where 10 is very expert), please rate how exper you think the other player was.</h3>
                     <ul class='likert'>
                       <li>
                         <input type="radio" name="EQ" value=0>
@@ -394,7 +394,7 @@
                     </ul>
 
 
-                    <p>On a scale of 0-10 (where 10 is the highest possible trustworthiness), please rate how trustworhy you think the other player was in this round. </p>
+                    <h3>On a scale of 0-10 (where 10 is highly trustworthy), please rate how trustworhy you think the other player was in this round. </h3>
                     <ul class='likert'>
                       <li>
                         <input type="radio" name="WQ" value=0>
@@ -450,7 +450,7 @@
    <div id="debrief" class="frame" style="display:none;">
      <div id="user-left" style="display:none; font-size:30px; text-align:center;margin:5% 0">
            Unfortunately, the other user left the game. <br>
-            You might still be able to receive partial compensation for your time after you complete this form.<br>
+            You will be compensated for your time after you complete this form.<br>
             <br>
           </div>
           <h1>Demographics and Debrief</h1>
@@ -483,7 +483,7 @@
              <!-- beginning of a question -->
              <div class="row question">
                  <div class="col-md-8">
-                     <b>3.</b>On a scale of 0-10 (where 10 is the most engaging), please rate how <b>ENGAGING</b> you found the learning task:
+                     <b>3.</b>On a scale of 0-10 (where 10 is completely engaging), please rate how <b>ENGAGING</b> you found the task:
                  </div>
                  <div class="col-md-4">
                      <select id="engagement" name="engagement" class="posttestQ">
@@ -521,7 +521,7 @@
                          <option value="3">3</option>
                          <option value="2">2</option>
                          <option value="1">1</option>
-                         <option value="0">0 - Not difficult</option>
+                         <option value="0">0 - Not difficult at all</option>
                      </select>
                  </div>
              </div>
@@ -566,9 +566,9 @@
 <script src="/js/group/start_game.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-  $(window).on('beforeunload', function(){
+window.onbeforeunload = function(){
          return 'Are you sure you want to leave?';
-  });
+  };
 </script>
 
 
