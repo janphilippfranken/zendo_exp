@@ -28,10 +28,10 @@ module.exports = function(_, roomFunctions){
           }else{ // if there is no error
             // either 0 or result
             if(0){ // put 0 in there if you don't want to exclude second-timers. else put result
-              res.render('no-take-part');
+              return res.render('no-take-part');
             } else {
               // //console.log(req.flash('error')) // this shouldn't be an empty list, check this when u can
-              var roomDetails = roomFunctions.main(io);
+              //var roomDetails = roomFunctions.main(io);
               //console.log(roomDetails);
               return res.render('signup', {messages: req.flash('error'), hasErrors: req.flash('error').length > 0}) // renders a file from the views folder along side with an object
 
@@ -50,7 +50,7 @@ module.exports = function(_, roomFunctions){
         req.session.username = req.body.username;
         // if(!isNew){ // if the room it' not new, wait 5 seconds to make sure the content is available
         //   setTimeout(() => {
-        return  res.redirect('/group');//+room);
+        return res.redirect('/instructions');//+room);
         //   }, 5000)
         // } else { // if the room is new, go in straight away
         //   return  res.redirect('/group/'+room);

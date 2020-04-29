@@ -15,6 +15,9 @@ module.exports = function(io, Users){
   // inside the following connection we put every event that we listen or send
   io.on('connection', socket => {// that enables the server to lister to the connections event
 
+    socket.on('go-to-debrief', ()=>{
+      socket.isAvailable = false;
+    });
     //////////////////////////////////////////
     // Getting trial data from client
     /////////////////////////////////////////
@@ -170,8 +173,8 @@ module.exports = function(io, Users){
 
   socket.on('disconnect', () => {
     var user = users.RemoveUser(socket.id);
-    console.log(user);
     if(user){
+      console.log(user);
       console.log(io.sockets.adapter.rooms);
       console.log("User "+socket.username+" disconnected ");
       io.to(user.room).emit('usersList', {params:'', users:users.GetUsersList(user.room), user_left:user}); // getting the user list using the function defined in the Users class

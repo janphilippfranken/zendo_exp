@@ -16,7 +16,7 @@ module.exports = function(_){
         // newIp.save(function(err) {
         //   if (err)return handleError(err);
         // });
-        res.render('group', {groupName:'room', username: req.session.username});
+        return res.render('group', {groupName:'room', username: req.session.username});
 
       }
          }
